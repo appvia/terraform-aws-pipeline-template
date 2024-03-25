@@ -1,0 +1,18 @@
+---
+name: Terraform
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@main
+    name: Plan and Apply
+    with:
+      aws-account-id: <ACCOUNT_ID>
+      aws-role-name-readonly: github-<ROLE_NAME>-ro
+      aws-role-name-readwrite: github-<ROLE_NAME>-rw
