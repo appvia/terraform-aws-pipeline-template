@@ -12,6 +12,8 @@ jobs:
   terraform:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@main
     name: Plan and Apply
+    secrets:
+      infracost-api-key: ${{ secrets.ORG_INFRACOST_API_KEY }}
     with:
       aws-account-id: <ACCOUNT_ID>
       aws-role-name-readonly: github-<ROLE_NAME>-ro
