@@ -8,6 +8,10 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   terraform:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@main
@@ -16,5 +20,4 @@ jobs:
       infracost-api-key: ${{ secrets.ORG_INFRACOST_API_KEY }}
     with:
       aws-account-id: <ACCOUNT_ID>
-      aws-role-name-readonly: github-<ROLE_NAME>-ro
-      aws-role-name-readwrite: github-<ROLE_NAME>-rw
+      aws-role: <ROLE_NAME>
