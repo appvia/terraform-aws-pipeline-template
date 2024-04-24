@@ -16,7 +16,7 @@
 #
 AUTHOR_EMAIL=info@appvia.io
 
-.PHONY: all security lint format documentation documentation-examples validate-all validate validate-examples init
+.PHONY: all security lint format documentation validate init
 
 default: all
 
@@ -31,11 +31,6 @@ all:
 documentation: 
 	@echo "--> Generating documentation"
 	@terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .
-	$(MAKE) documentation-examples
-
-documentation-examples:
-	@echo "--> Generating documentation examples"
-	@find examples -type d -mindepth 1 -maxdepth 1 -exec terraform-docs markdown table --output-file README.md --output-mode inject {} \;
 
 init: 
 	@echo "--> Running terraform init"
@@ -44,19 +39,6 @@ init:
 security: 
 	@echo "--> Running Security checks"
 	@tfsec .
-	$(MAKE) security-examples
-
-security-examples:
-	@echo "--> Running Security checks on examples"
-	@find examples -type d -mindepth 1 -maxdepth 1 | while read -r dir; do \
-		echo "--> Validating $$dir"; \
-		tfsec $$dir; \
-	done
-
-validate-all:
-	@echo "--> Running all validation checks"
-	$(MAKE) validate
-	$(MAKE) validate-examples
 
 validate:
 	@echo "--> Running terraform validate"
@@ -64,27 +46,11 @@ validate:
 	@terraform validate
 	$(MAKE) validate-examples
 
-validate-examples:
-	@echo "--> Running terraform validate on examples"
-	@find examples -type d -mindepth 1 -maxdepth 1 | while read -r dir; do \
-		echo "--> Validating $$dir"; \
-		terraform -chdir=$$dir init; \
-		terraform -chdir=$$dir validate; \
-	done
-
 lint:
 	@echo "--> Running tflint"
 	@tflint --init 
 	@tflint -f compact
 	$(MAKE) lint-examples
-
-lint-examples:
-	@echo "--> Running tflint on examples"
-	@find examples -type d -mindepth 1 -maxdepth 1 | while read -r dir; do \
-		echo "--> Linting $$dir"; \
-		tflint --chdir=$$dir --init; \
-		tflint --chdir=$$dir -f compact; \
-	done
 
 format: 
 	@echo "--> Running terraform fmt"
