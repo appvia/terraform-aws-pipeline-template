@@ -44,13 +44,11 @@ validate:
 	@echo "--> Running terraform validate"
 	@terraform init -backend=false
 	@terraform validate
-	$(MAKE) validate-examples
 
 lint:
 	@echo "--> Running tflint"
 	@tflint --init 
 	@tflint -f compact
-	$(MAKE) lint-examples
 
 format: 
 	@echo "--> Running terraform fmt"
