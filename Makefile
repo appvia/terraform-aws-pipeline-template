@@ -38,7 +38,7 @@ init:
 
 security: 
 	@echo "--> Running Security checks"
-	@tfsec .
+	@trivy config .
 
 validate:
 	@echo "--> Running terraform validate"
