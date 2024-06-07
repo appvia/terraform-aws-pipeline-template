@@ -38,7 +38,7 @@ init:
 
 security: 
 	@echo "--> Running Security checks"
-	@trivy config .
+	trivy config  --format table --exit-code  1 --severity  CRITICAL,HIGH --ignorefile ./trivyignores .
 
 validate:
 	@echo "--> Running terraform validate"
