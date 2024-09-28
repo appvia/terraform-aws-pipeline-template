@@ -16,9 +16,16 @@ permissions:
 jobs:
   terraform:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@main
-    name: Plan and Apply
+    name: Terraform Plan and Apply
     secrets:
       infracost-api-key: ${{ secrets.ORG_INFRACOST_API_KEY }}
+    with:
+      aws-account-id: <ACCOUNT_ID>
+      aws-role: <ROLE_NAME>
+
+  destroy:
+    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-destroy.yml@main
+    name: Terraform Destroy
     with:
       aws-account-id: <ACCOUNT_ID>
       aws-role: <ROLE_NAME>
