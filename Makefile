@@ -28,6 +28,14 @@ all:
 documentation: 
 	@echo "--> Generating documentation"
 	@terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .
+	$(MAKE) documentation-examples 
+
+documentation-examples:
+	@echo "--> Generating documentation examples"
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+		echo "--> Generating documentation for $$dir"; \
+		terraform-docs markdown table --output-file README.md --output-mode inject $$dir; \
+	done;
 
 init: 
 	@echo "--> Running terraform init"
@@ -36,11 +44,27 @@ init:
 security: 
 	@echo "--> Running Security checks"
 	trivy config  --format table --exit-code  1 --severity  CRITICAL,HIGH --ignorefile .trivyignore .
+	$(MAKE) security-examples
+
+security-examples:
+	@echo "--> Running Security checks on examples"
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+		echo "--> Validating $$dir"; \
+		trivy config  --format table --exit-code  1 --severity  CRITICAL,HIGH --ignorefile .trivyignore $$dir; \
+	done;
 
 commitlint:
 	@echo "--> Running commitlint against the main branch"
 	@command -v commitlint >/dev/null 2>&1 || { echo "commitlint is not installed. Please install it by running 'npm install -g commitlint'"; exit 1; }
 	@git log --pretty=format:"%s" origin/main..HEAD | commitlint --from=origin/main
+
+lint-examples:
+	@echo "--> Running tflint on examples"
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+		echo "--> Linting $$dir"; \
+		tflint --chdir=$$dir --init; \
+		tflint --chdir=$$dir -f compact; \
+	done; 
 
 lint:
 	@echo "--> Running tflint"
@@ -51,6 +75,14 @@ format:
 	@echo "--> Running terraform fmt"
 	@terraform fmt -recursive -write=true
 
+validate-examples:
+	@echo "--> Running terraform validate on examples"
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+		echo "--> Validating $$dir"; \
+		terraform -chdir=$$dir init -backend=false; \
+		terraform -chdir=$$dir validate; \
+	done; 
+
 validate:
 	@echo "--> Running terraform validate"
 	@terraform init -backend=false
@@ -59,6 +91,9 @@ validate:
 	$(MAKE) commitlint
 	$(MAKE) format
 	$(MAKE) security
+	$(MAKE) validate-examples
+	$(MAKE) lint-examples
+	$(MAKE) security-examples
 
 clean:
 	@echo "--> Cleaning up"
