@@ -27,12 +27,12 @@ all:
 
 documentation: 
 	@echo "--> Generating documentation"
-	@terraform-docs markdown table --output-file ${PWD}/README.md --output-mode inject .
+	@terraform-docs .
 	$(MAKE) documentation-examples 
 
 documentation-examples:
 	@echo "--> Generating documentation examples"
-	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Generating documentation for $$dir"; \
 		terraform-docs markdown table --output-file README.md --output-mode inject $$dir; \
 	done;
@@ -43,12 +43,12 @@ init:
 
 security: 
 	@echo "--> Running Security checks"
-	trivy config  --format table --exit-code  1 --severity  CRITICAL,HIGH --ignorefile .trivyignore .
+	trivy config  --format table --exit-code 1 --severity CRITICAL,HIGH --ignorefile .trivyignore .
 	$(MAKE) security-examples
 
 security-examples:
 	@echo "--> Running Security checks on examples"
-	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Validating $$dir"; \
 		trivy config  --format table --exit-code  1 --severity  CRITICAL,HIGH --ignorefile .trivyignore $$dir; \
 	done;
@@ -60,7 +60,7 @@ commitlint:
 
 lint-examples:
 	@echo "--> Running tflint on examples"
-	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Linting $$dir"; \
 		tflint --chdir=$$dir --init; \
 		tflint --chdir=$$dir -f compact; \
@@ -77,7 +77,7 @@ format:
 
 validate-examples:
 	@echo "--> Running terraform validate on examples"
-	@find . -type d -path '*/examples/*' -not -path '*.terraform*'| while read -r dir; do \
+	@find . -type d -path '*/examples/*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Validating $$dir"; \
 		terraform -chdir=$$dir init -backend=false; \
 		terraform -chdir=$$dir validate; \
@@ -97,7 +97,7 @@ validate:
 
 clean:
 	@echo "--> Cleaning up"
-	@find . -type d -name ".terraform" | while read -r dir; do \
+	@find . -type d -name ".terraform" 2>/dev/null | while read -r dir; do \
 		echo "--> Removing $$dir"; \
 		rm -rf $$dir; \
 	done

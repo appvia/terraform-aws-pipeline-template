@@ -1,4 +1,3 @@
-formatter: markdown
 #header-from: .header.md
 settings:
   anchor: true
@@ -12,8 +11,11 @@ settings:
   type: true
   lockfile: false
 
-recursive:
-  enabled: true
+formatter: "markdown table"
+
+output:
+  file: README.md
+  mode: inject
 
 sections:
   show:
@@ -24,7 +26,3 @@ sections:
 sort:
   enabled: true
   by: required
-
-output:
-  file: README.md
-  mode: inject
