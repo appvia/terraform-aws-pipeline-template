@@ -34,7 +34,7 @@ documentation-examples:
 	@echo "--> Generating documentation examples"
 	@find . -type d -path '*/examples/*' -not -path '*.terraform*' 2>/dev/null | while read -r dir; do \
 		echo "--> Generating documentation for $$dir"; \
-		terraform-docs markdown table --output-file README.md --output-mode inject $$dir; \
+		terraform-docs $$dir; \
 	done;
 
 init: 
