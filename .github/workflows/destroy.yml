@@ -1,5 +1,5 @@
 ---
-name: Terraform
+name: Terraform Destroy
 on:
   workflow_dispatch:
     confirmation:
