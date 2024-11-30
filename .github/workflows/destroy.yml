@@ -27,6 +27,10 @@ jobs:
   destroy:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-destroy.yml@main
     name: Terraform Destroy
+    secrets:
+      appvia-actions-id: "${{ secrets.ORG_ACTIONS_APP_ID }}"
+      appvia-actions-secret: "${{ secrets.ORG_ACTIONS_APP_SECRET }}"
     with:
       aws-account-id: <ACCOUNT_ID>
       aws-role: <ROLE_NAME>
+      enable-private-access: true

@@ -19,12 +19,15 @@ jobs:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@main
     name: Terraform Plan and Apply
     secrets:
+      appvia-actions-id: "${{ secrets.ORG_ACTIONS_APP_ID }}"
+      appvia-actions-secret: "${{ secrets.ORG_ACTIONS_APP_SECRET }}"
       infracost-api-key: ${{ secrets.ORG_INFRACOST_API_KEY }}
     with:
-      ## Copies any additional directories into the apply stage 
+      ## Copies any additional directories into the apply stage
       # additional-dir: builds
-      ## Allows the additional directories to be empty 
+      ## Allows the additional directories to be empty
       # additional-dir-optional: true
       aws-account-id: <ACCOUNT_ID>
       aws-role: <ROLE_NAME>
       enable-infracost: true
+      enable-private-access: true
