@@ -1,0 +1,4 @@
+AUTHOR=solutions@appvia.io
+GIT_URL=git@github.com:appvia/terraform-aws-pipeline-template.git
+REPOSITORY=github.com/appvia/terraform-aws-pipeline-template
+URL=https://github.com/appvia/terraform-aws-pipeline-template
