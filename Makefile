@@ -102,3 +102,7 @@ clean:
 		echo "--> Removing $$dir"; \
 		rm -rf $$dir; \
 	done
+	@find . -type f -name ".terraform.lock.hcl" 2>/dev/null | while read -r file; do \
+		echo "--> Removing $$file"; \
+		rm -rf $$file; \
+	done
