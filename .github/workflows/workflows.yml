@@ -35,7 +35,7 @@ jobs:
       - name: Install Go
         uses: actions/setup-go@v6
         with:
-          go-version: 1.22.x
+          go-version: 1.25.x
           cache: true
       - name: Install Actionlint
         run: go install github.com/rhysd/actionlint/cmd/actionlint@latest
