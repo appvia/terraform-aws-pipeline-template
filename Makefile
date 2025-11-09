@@ -3,12 +3,12 @@
 # modify it under the terms of the GNU General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
@@ -17,7 +17,7 @@
 
 default: all
 
-all: 
+all:
 	$(MAKE) init
 	$(MAKE) validate
 	$(MAKE) lint
@@ -25,10 +25,10 @@ all:
 	$(MAKE) format
 	$(MAKE) documentation
 
-documentation: 
+documentation:
 	@echo "--> Generating documentation"
 	@terraform-docs .
-	$(MAKE) documentation-examples 
+	$(MAKE) documentation-examples
 
 documentation-examples:
 	@echo "--> Generating documentation examples"
@@ -37,7 +37,7 @@ documentation-examples:
 		terraform-docs $$dir; \
 	done;
 
-init: 
+init:
 	@echo "--> Running terraform init"
 	@terraform init -backend=false
 
@@ -65,16 +65,20 @@ lint-examples:
 		echo "--> Linting $$dir"; \
 		tflint --chdir=$$dir --init; \
 		tflint --chdir=$$dir -f compact; \
-	done; 
+	done;
 
 lint:
 	@echo "--> Running tflint"
-	@tflint --init 
+	@tflint --init
 	@tflint -f compact
 
-format: 
+format:
 	@echo "--> Running terraform fmt"
 	@terraform fmt -recursive -write=true
+
+install-precommit:
+	@echo "--> Installing pre-commit hooks"
+	@command -v pre-commit >/dev/null 2>&1 || { echo "pre-commit is not installed. Please install it by running 'pip install pre-commit'"; exit 1; }
 
 validate-examples:
 	@echo "--> Running terraform validate on examples"
@@ -82,13 +86,13 @@ validate-examples:
 		echo "--> Validating $$dir"; \
 		terraform -chdir=$$dir init -backend=false; \
 		terraform -chdir=$$dir validate; \
-	done; 
+	done;
 
 validate:
 	@echo "--> Running terraform validate"
 	@terraform init -backend=false
 	@terraform validate
-	$(MAKE) lint 
+	$(MAKE) lint
 	$(MAKE) commitlint
 	$(MAKE) format
 	$(MAKE) security
