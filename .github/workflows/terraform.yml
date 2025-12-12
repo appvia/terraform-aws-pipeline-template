@@ -4,9 +4,21 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - ".github/**"
+      - "docs/**"
+      - "Makefile"
+      - "README.md"
+      - "scripts/**"
   pull_request:
     branches:
       - main
+    paths-ignore:
+      - ".github/**"
+      - "docs/**"
+      - "Makefile"
+      - "README.md"
+      - "scripts/**"
   workflow_dispatch:
 
 permissions:
