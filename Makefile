@@ -71,6 +71,12 @@ lint:
 	@echo "--> Running tflint"
 	@tflint --init
 	@tflint -f compact
+	$(MAKE) lint-actions
+
+lint-actions:
+	@echo "--> Running Linting on GitHub Actions"
+	@command -v actionlint >/dev/null 2>&1 || { echo "actionlint is not installed. Please install the binary'"; exit 1; }
+	@actionlint .github/workflows/*.yml
 
 format:
 	@echo "--> Running terraform fmt"
