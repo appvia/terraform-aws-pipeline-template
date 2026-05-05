@@ -17,5 +17,5 @@ permissions:
 
 jobs:
   validate-workflows:
-    uses: appvia/appvia-cicd-workflows/.github/workflows/github-workflow-validation.yml@f30d1ecbc7f79ff2248b29959a700a5661b82ab5 # main
+    uses: appvia/appvia-cicd-workflows/.github/workflows/github-workflow-validation.yml@77a6eddfb738cffd292a211ccde1cb298642370c # main
     name: Validate GitHub Workflows
