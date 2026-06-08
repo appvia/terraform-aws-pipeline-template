@@ -28,7 +28,7 @@ permissions:
 
 jobs:
   terraform:
-    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@3989754d15d0991f1c960f68075d7c5efd7b1ba1 # main
+    uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@d356de2a6df8c4d482880e54a2a6255fdb2cf921 # main
     name: Terraform Plan and Apply
     secrets:
       actions-id: "${{ secrets.ORG_ACTIONS_APP_ID }}"
