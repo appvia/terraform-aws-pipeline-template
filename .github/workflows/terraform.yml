@@ -31,8 +31,8 @@ jobs:
     uses: appvia/appvia-cicd-workflows/.github/workflows/terraform-plan-and-apply-aws.yml@201431e5550813748bf123734a627a747ac0db3e # main
     name: Terraform Plan and Apply
     secrets:
-      actions-id: "${{ secrets.ORG_ACTIONS_APP_ID }}"
-      actions-secret: "${{ secrets.ORG_ACTIONS_APP_SECRET }}"
+      actions-id: "${{ secrets.ACTION_ID }}"
+      actions-secret: "${{ secrets.ACTION_SECRET }}"
       infracost-api-key: ${{ secrets.ORG_INFRACOST_API_KEY }}
     with:
       ## Copies any additional directories into the apply stage
