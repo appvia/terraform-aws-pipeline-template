@@ -26,7 +26,7 @@ The Makefile includes the following targets:
 - `documentation`: Generates documentation using `terraform-docs`.
 - `security`: Runs security checks using Trivy.
 - `commitlint`: Validates commit messages against conventional commit standards.
-- `clean`: Cleans up Terraform state files and lock files.
+- `clean`: Removes local `.terraform` directories. The `.terraform.lock.hcl` dependency lock file is committed and is not removed.
 
 To use the Makefile, run the following command:
 

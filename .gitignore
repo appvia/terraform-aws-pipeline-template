@@ -16,8 +16,8 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
-# Ignore terraform lock file
-.terraform.lock.hcl
+# Note: .terraform.lock.hcl is intentionally NOT ignored. Root configurations commit the
+# dependency lock file so provider versions and hashes are reproducible across runs.
 
 # Ignore terraform state files
 *.tfstate
