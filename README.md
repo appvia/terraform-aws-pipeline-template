@@ -176,7 +176,7 @@ make validate    # init, validate, lint, format, security, commitlint, examples
 make lint        # tflint + actionlint on workflows
 make format      # terraform fmt -recursive
 make security    # trivy config (CRITICAL/HIGH)
-make clean       # remove .terraform dirs and lock files
+make clean       # remove .terraform dirs (the committed lock file is kept)
 make all         # init through documentation generation
 ```
 
